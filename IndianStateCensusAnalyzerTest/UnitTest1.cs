@@ -5,6 +5,10 @@ namespace IndianStateCensusAnalyzerTest
     public class Tests
     {
         public string stateCensusDataFilePath = @"D:\BridgeLabs Training\IndianStateCensusAnalyzer\IndianStateCensusAnalyzer\Files\StateCensusData.csv";
+        public string stateCensusDataIncorrectFilePath = @"D:\BridgeLabs Training\IndianStateCensusAnalyzer\IndianStateCensusAnalyzer\Files\StateCensusData.txt";
+        public string stateCensusDataNoFilePath = @"D:\BridgeLabs Training\IndianStateCensusAnalyzer\IndianStateCensusAnalyzer\Files\StateCensus.csv";
+        public string stateCensusDataHeaderFilePath = @"D:\BridgeLabs Training\IndianStateCensusAnalyzer\IndianStateCensusAnalyzer\Files\StateCensusDataHeader.csv";
+        public string stateCensusDataDelimiterFilePath = @"D:\BridgeLabs Training\IndianStateCensusAnalyzer\IndianStateCensusAnalyzer\Files\StateCensusDataDelimiter.csv";
         [Test]
         public void GivenStateCensusData_WhenAnalysed_RecordsShouldBeMatched()
         {
@@ -16,7 +20,7 @@ namespace IndianStateCensusAnalyzerTest
         {
             try
             {
-                StateCensusAnalyzer.ReadStateCensusData(stateCensusDataFilePath);
+                StateCensusAnalyzer.ReadStateCensusData(stateCensusDataIncorrectFilePath);
             }
             catch (CensusAnalyzerException ex)
             {
@@ -28,7 +32,7 @@ namespace IndianStateCensusAnalyzerTest
         {
             try
             {
-                StateCensusAnalyzer.ReadStateCensusData(stateCensusDataFilePath);
+                StateCensusAnalyzer.ReadStateCensusData(stateCensusDataNoFilePath);
             }
             catch (CensusAnalyzerException ex)
             {
@@ -40,11 +44,23 @@ namespace IndianStateCensusAnalyzerTest
         {
             try
             {
-                StateCensusAnalyzer.ReadStateCensusData(stateCensusDataFilePath);
+                StateCensusAnalyzer.ReadStateCensusData(stateCensusDataHeaderFilePath);
             }
             catch (CensusAnalyzerException ex)
             {
-                Assert.AreEqual(ex.Message, "Header Incorrect");
+                Assert.AreEqual(ex.Message, "Header incorrect");
+            }
+        }
+        [Test]
+        public void GivenStateCensusDataFileDelimiterIncorrect_WhenAnalysed_ShouldReturnException()
+        {
+            try
+            {
+                StateCensusAnalyzer.ReadStateCensusData(stateCensusDataDelimiterFilePath);
+            }
+            catch (CensusAnalyzerException ex)
+            {
+                Assert.AreEqual(ex.Message, "Delimiter incorrect");
             }
         }
     }
